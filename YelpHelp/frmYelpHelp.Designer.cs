@@ -75,10 +75,10 @@
             this.chkbox_HotAndNew = new System.Windows.Forms.CheckBox();
             this.chk_CompactSearch = new System.Windows.Forms.CheckBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.tssl_Status = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tssl_RecordCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tssl_Status = new System.Windows.Forms.ToolStripStatusLabel();
             this.grpBoxSearch.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -361,9 +361,9 @@
             this.radio_OpenAt.AutoSize = true;
             this.radio_OpenAt.Location = new System.Drawing.Point(11, 47);
             this.radio_OpenAt.Name = "radio_OpenAt";
-            this.radio_OpenAt.Size = new System.Drawing.Size(64, 17);
+            this.radio_OpenAt.Size = new System.Drawing.Size(196, 17);
             this.radio_OpenAt.TabIndex = 11;
-            this.radio_OpenAt.Text = "Open At";
+            this.radio_OpenAt.Text = "Open At (Works only for today Date)";
             this.radio_OpenAt.UseVisualStyleBackColor = true;
             this.radio_OpenAt.CheckedChanged += new System.EventHandler(this.radio_OpenAt_CheckedChanged);
             // 
@@ -411,6 +411,7 @@
             this.Hdr_Address});
             this.listView_Result.FullRowSelect = true;
             this.listView_Result.GridLines = true;
+            this.listView_Result.HideSelection = false;
             this.listView_Result.Location = new System.Drawing.Point(13, 274);
             this.listView_Result.Name = "listView_Result";
             this.listView_Result.Size = new System.Drawing.Size(796, 224);
@@ -502,22 +503,17 @@
             // 
             // statusStrip1
             // 
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel2,
             this.tssl_RecordCount,
             this.toolStripStatusLabel4,
             this.tssl_Status});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 549);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 551);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(821, 22);
             this.statusStrip1.TabIndex = 20;
             this.statusStrip1.Text = "statusStrip_Main";
-            // 
-            // tssl_Status
-            // 
-            this.tssl_Status.Name = "tssl_Status";
-            this.tssl_Status.Size = new System.Drawing.Size(48, 17);
-            this.tssl_Status.Text = "Ready...";
             // 
             // toolStripStatusLabel2
             // 
@@ -537,11 +533,17 @@
             this.toolStripStatusLabel4.Size = new System.Drawing.Size(16, 17);
             this.toolStripStatusLabel4.Text = " | ";
             // 
+            // tssl_Status
+            // 
+            this.tssl_Status.Name = "tssl_Status";
+            this.tssl_Status.Size = new System.Drawing.Size(48, 17);
+            this.tssl_Status.Text = "Ready...";
+            // 
             // frmYelpHelp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(821, 571);
+            this.ClientSize = new System.Drawing.Size(821, 573);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.chk_CompactSearch);
             this.Controls.Add(this.chkbox_HotAndNew);
