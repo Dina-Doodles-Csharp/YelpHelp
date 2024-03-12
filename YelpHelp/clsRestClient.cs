@@ -22,13 +22,17 @@ namespace YelpHelp
         public static Dictionary<string, string> GetCategories()
         {
             const string CategoriesPath = BasePath + "/categories";
-            RestClient objRestClient = new RestClient(CategoriesPath);
-            RestRequest objRequest = new RestRequest(Method.GET);
-            objRequest.RequestFormat = DataFormat.Json;
-            objRequest.AddHeader("Content-Type", "application/json");
-            objRequest.AddHeader("Authorization", "Bearer 1wH24EiSwVfHufOi0VQtR1us8xFzurDL-ZHoQXbSaYqhv68ANOAKvumo3G1h-q16WsiYUo7XSYj0gTeDuRpHWxZ2KVMhC1ndEUtKPv50-b-xFKUtYmmhpxXX0FpDXnYx");
 
-            IRestResponse objResponse = objRestClient.Execute(objRequest);
+            RestClientOptions options = new RestClientOptions();
+            options.BaseUrl = new Uri(CategoriesPath);
+            RestClient restClient = new RestClient(options);
+
+            RestRequest objRequest = new RestRequest();
+            //objRequest.AddHeader("Content-Type", "application/json");
+            objRequest.AddHeader("Authorization", "Bearer 1wH24EiSwVfHufOi0VQtR1us8xFzurDL-ZHoQXbSaYqhv68ANOAKvumo3G1h-q16WsiYUo7XSYj0gTeDuRpHWxZ2KVMhC1ndEUtKPv50-b-xFKUtYmmhpxXX0FpDXnYx");
+            objRequest.RequestFormat = DataFormat.Json;
+            RestResponse objResponse = restClient.ExecuteGet(objRequest);
+
             string responseString = objResponse.Content.ToString().Trim();
 
             Dictionary<string, string> CategoriesList = null;
@@ -208,17 +212,21 @@ namespace YelpHelp
         public static List<Business> YelpSearch(Dictionary<string,string> Parameters)
         {
             const string BusinessSearchPath = BasePath + "/businesses/search";
-            RestClient objRestClient = new RestClient(BusinessSearchPath);
-            RestRequest objRequest = new RestRequest(Method.GET);
-            objRequest.RequestFormat = DataFormat.Json;
-            objRequest.AddHeader("Content-Type", "application/json");
+
+            RestClientOptions options = new RestClientOptions();
+            options.BaseUrl = new Uri(BusinessSearchPath);
+            RestClient restClient = new RestClient(options);
+
+            RestRequest objRequest = new RestRequest();
+            //objRequest.AddHeader("Content-Type", "application/json");
             objRequest.AddHeader("Authorization", "Bearer 1wH24EiSwVfHufOi0VQtR1us8xFzurDL-ZHoQXbSaYqhv68ANOAKvumo3G1h-q16WsiYUo7XSYj0gTeDuRpHWxZ2KVMhC1ndEUtKPv50-b-xFKUtYmmhpxXX0FpDXnYx");
+            objRequest.RequestFormat = DataFormat.Json;
 
             //Loop through each parameter
             foreach (KeyValuePair<string, string> KVP in Parameters)
                 objRequest.AddParameter(KVP.Key.ToString(),KVP.Value.ToString());
 
-            IRestResponse objResponse = objRestClient.Execute(objRequest);
+            RestResponse objResponse = restClient.ExecuteGet(objRequest);
             string responseString = objResponse.Content.ToString().Trim();
 
             clsBusinessResults ObjBusinessResults = JsonConvert.DeserializeObject<clsBusinessResults>(responseString);
@@ -239,10 +247,14 @@ namespace YelpHelp
             //Setting offset counter to restrict the result. Prevent Overkill of rest call
             while (StopSearch == false && offSetCounter < 10)
             {
-                RestClient objRestClient = new RestClient(BusinessSearchPath);
-                RestRequest objRequest = new RestRequest(Method.GET);
+
+                RestClientOptions options = new RestClientOptions();
+                options.BaseUrl = new Uri(BusinessSearchPath);
+                RestClient restClient = new RestClient(options);
+
+                RestRequest objRequest = new RestRequest();
                 objRequest.RequestFormat = DataFormat.Json;
-                objRequest.AddHeader("Content-Type", "application/json");
+                //objRequest.AddHeader("Content-Type", "application/json");
                 objRequest.AddHeader("Authorization", "Bearer 1wH24EiSwVfHufOi0VQtR1us8xFzurDL-ZHoQXbSaYqhv68ANOAKvumo3G1h-q16WsiYUo7XSYj0gTeDuRpHWxZ2KVMhC1ndEUtKPv50-b-xFKUtYmmhpxXX0FpDXnYx");
 
                 //Loop through each parameter
@@ -252,7 +264,7 @@ namespace YelpHelp
                 objRequest.AddParameter("offset", (offSetCounter * PageOffset).ToString());
                 offSetCounter++;
 
-                IRestResponse objResponse = objRestClient.Execute(objRequest);
+                RestResponse objResponse = restClient.ExecuteGet(objRequest);
 
                 string responseString = objResponse.Content.ToString().Trim();
 
@@ -279,11 +291,16 @@ namespace YelpHelp
         {
             //Create account in the ipstack
             const string CategoriesPath = "http://api.ipstack.com/check";
-            RestClient objRestClient = new RestClient(CategoriesPath);
-            RestRequest objRequest = new RestRequest(Method.GET);
-            objRequest.AddQueryParameter("access_key", "d08595cb93d6e74518ea8bfb36a48101");
 
-            IRestResponse objResponse = objRestClient.Execute(objRequest);
+            RestClientOptions options = new RestClientOptions();
+            options.BaseUrl = new Uri(CategoriesPath);
+            options.UserAgent = "Dina";
+            RestClient restClient = new RestClient(options);
+
+            RestRequest objRequest = new RestRequest();
+            objRequest.AddQueryParameter("access_key", "d08595cb93d6e74518ea8bfb36a48101");
+            RestResponse objResponse = restClient.ExecuteGet(objRequest);
+
             string responseString = objResponse.Content.ToString().Trim();
             //Debug.WriteLine(responseString);
             clsRequestorIP ObjRequestorIP = JsonConvert.DeserializeObject<clsRequestorIP>(responseString);
